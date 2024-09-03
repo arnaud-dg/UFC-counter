@@ -45,7 +45,6 @@ The SMART Gelose Counter is a machine learning-based application designed to aut
     ```
 
 ## API Usage
-
 The application also provides an API for programmatic access:
 - GET /: Health check endpoint.
 - POST /predict/: Upload an image to receive CFU predictions.
@@ -61,6 +60,7 @@ The application also provides an API for programmatic access:
 ## Configuration
 - Model Path: Ensure the YOLOv5 model is located in the models directory.
 - API Endpoint: Configure the API endpoint in the Streamlit app if running the API on a different server (local VS online).
+API Endpoint documentation is accessible to he following weblink : https://ufc-counter-api-e72d4934bdd3.herokuapp.com/docs#
 
 ## Documentation
 - The code is well-commented to help understand the flow and purpose of each function.
