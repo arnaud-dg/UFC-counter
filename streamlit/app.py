@@ -42,9 +42,6 @@ st.sidebar.image(str(LOGO_PATH), width=250)
 # Load the test results dataset into a DataFrame
 df = pd.read_csv(str(DATA_PATH), sep=";")
 
-# Create tabs for the app
-tab1, tab2, tab3 = st.tabs(["Prototype Demo", "Model Performance", "About the app"])
-
 # Configure the sidebar with information and options
 st.sidebar.write("")
 st.sidebar.write("The purpose of this web app is to streamline the process of *counting Colony-Forming Units* in *gelose plates* using advanced computer vision techniques.")
