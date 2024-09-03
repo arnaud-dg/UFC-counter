@@ -1,1 +1,4 @@
 data/
+notebooks/yolov5
+notebooks/.ipynb_checkpoints
+*.pptx

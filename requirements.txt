@@ -1,1 +1,14 @@
-
+streamlit==1.38.0
+pandas==2.2.1
+Pillow==10.4.0
+opencv-python-headless==4.10.0.84
+dill
+requests
+fastapi==0.110.0
+uvicorn==0.28.0
+python-multipart
+PyYAML
+tqdm
+matplotlib
+seaborn
+scipy==1.14.0
