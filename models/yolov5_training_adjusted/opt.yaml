@@ -1,6 +1,6 @@
 weights: yolov5s.pt
 cfg: ''
-data: C:/Users/Arnaud/CFU-counter/data/yolo_data.yaml
+data: C:/Users/Arnaud/UFC-counter/data/yolo_data.yaml
 hyp:
   lr0: 0.001
   lrf: 0.01
@@ -51,7 +51,7 @@ single_cls: false
 optimizer: Adam
 sync_bn: false
 workers: 8
-project: C:/Users/Arnaud/CFU-counter/models
+project: C:/Users/Arnaud/UFC-counter/models
 name: yolov5_training_adjusted
 exist_ok: false
 quad: false
@@ -69,4 +69,4 @@ bbox_interval: -1
 artifact_alias: latest
 ndjson_console: false
 ndjson_file: false
-save_dir: C:\Users\Arnaud\CFU-counter\models\yolov5_training_adjusted
+save_dir: C:\Users\Arnaud\UFC-counter\models\yolov5_training_adjusted
