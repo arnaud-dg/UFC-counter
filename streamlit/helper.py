@@ -50,33 +50,6 @@ def combine_images(image1, image2, split_percentage):
     combined_image.paste(image2.crop((split_position, 0, width, height)), (split_position, 0))  # Add the second part of the image
     return combined_image
 
-# def draw_rectangles(image, results_data, show_probabilities=False):
-#     """
-#     Draw green rectangles on the image based on prediction results.
-
-#     Args:
-#         image (Image): The image on which to draw.
-#         results_data (pd.DataFrame): The prediction results containing bounding box coordinates.
-#         show_probabilities (bool): Whether to display prediction probabilities.
-
-#     Returns:
-#         Image: The image with rectangles drawn.
-#     """
-#     draw = ImageDraw.Draw(image, 'RGBA')
-#     for _, row in results_data.iterrows():
-#         bbox = [row['xmin'], row['ymin'], row['xmax'], row['ymax']]
-#         draw.rectangle(bbox, outline='green', fill=(0, 255, 0, 100), width=3)  # Draw a semi-transparent green rectangle
-    
-#     if show_probabilities:
-#         font = ImageFont.load_default()
-#         for _, row in results_data.iterrows():
-#             bbox = [row['xmin'], row['ymin'], row['xmax'], row['ymax']]
-#             confidence = f"{row['confidence'] * 100:.2f}%"
-#             text_position = (row['xmax'] + 2, row['ymin'])
-#             draw.text(text_position, text=confidence, fill='green')  # Draw the confidence score
-
-#     return image
-
 def draw_rectangles(image, results_data, show_probabilities=False):
     """
     Draw green rectangles on the image based on prediction results.
