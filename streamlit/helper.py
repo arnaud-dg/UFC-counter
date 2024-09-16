@@ -50,6 +50,33 @@ def combine_images(image1, image2, split_percentage):
     combined_image.paste(image2.crop((split_position, 0, width, height)), (split_position, 0))  # Add the second part of the image
     return combined_image
 
+# def draw_rectangles(image, results_data, show_probabilities=False):
+#     """
+#     Draw green rectangles on the image based on prediction results.
+
+#     Args:
+#         image (Image): The image on which to draw.
+#         results_data (pd.DataFrame): The prediction results containing bounding box coordinates.
+#         show_probabilities (bool): Whether to display prediction probabilities.
+
+#     Returns:
+#         Image: The image with rectangles drawn.
+#     """
+#     draw = ImageDraw.Draw(image, 'RGBA')
+#     for _, row in results_data.iterrows():
+#         bbox = [row['xmin'], row['ymin'], row['xmax'], row['ymax']]
+#         draw.rectangle(bbox, outline='green', fill=(0, 255, 0, 100), width=3)  # Draw a semi-transparent green rectangle
+    
+#     if show_probabilities:
+#         font = ImageFont.load_default()
+#         for _, row in results_data.iterrows():
+#             bbox = [row['xmin'], row['ymin'], row['xmax'], row['ymax']]
+#             confidence = f"{row['confidence'] * 100:.2f}%"
+#             text_position = (row['xmax'] + 2, row['ymin'])
+#             draw.text(text_position, text=confidence, fill='green')  # Draw the confidence score
+
+#     return image
+
 def draw_rectangles(image, results_data, show_probabilities=False):
     """
     Draw green rectangles on the image based on prediction results.
@@ -63,16 +90,46 @@ def draw_rectangles(image, results_data, show_probabilities=False):
         Image: The image with rectangles drawn.
     """
     draw = ImageDraw.Draw(image, 'RGBA')
+    width, height = image.size
+    
+    # Calculate base size for text and rectangles, proportional to image dimensions
+    base_size = int(min(width, height) * 0.02)  # 2% of the smaller dimension
+    min_size = 14  # Increased minimum size for better visibility
+    font_size = max(base_size, min_size)
+    line_width = max(3, int(base_size * 0.3))  # Ensure minimum line width of 3
+    
+    try:
+        font = ImageFont.truetype("arial.ttf", font_size)
+    except IOError:
+        font = ImageFont.load_default()
+
     for _, row in results_data.iterrows():
         bbox = [row['xmin'], row['ymin'], row['xmax'], row['ymax']]
-        draw.rectangle(bbox, outline='green', fill=(0, 255, 0, 100), width=3)  # Draw a semi-transparent green rectangle
+        draw.rectangle(bbox, outline='green', fill=(0, 255, 0, 100), width=line_width)  # Semi-transparent green rectangle
     
     if show_probabilities:
-        font = ImageFont.load_default()
         for _, row in results_data.iterrows():
-            bbox = [row['xmin'], row['ymin'], row['xmax'], row['ymax']]
             confidence = f"{row['confidence'] * 100:.2f}%"
-            text_position = (row['xmax'] + 2, row['ymin'])
-            draw.text(text_position, text=confidence, fill='green')  # Draw the confidence score
+            text_position = (int(row['xmax']) + 2, int(row['ymin']))
+            
+            # Create a temporary image to measure text size
+            temp_img = Image.new('RGBA', (1, 1), (0, 0, 0, 0))
+            temp_draw = ImageDraw.Draw(temp_img)
+            text_bbox = temp_draw.textbbox((0, 0), confidence, font=font)
+            text_width = text_bbox[2] - text_bbox[0]
+            text_height = text_bbox[3] - text_bbox[1]
+            
+            # Add padding to the text background
+            padding = font_size // 2
+            text_bg = [text_position[0], text_position[1], 
+                       text_position[0] + text_width + padding * 2, 
+                       text_position[1] + text_height + padding * 2]
+            
+            # Draw white background for text
+            draw.rectangle(text_bg, fill='white')
+            
+            # Draw text in dark green
+            draw.text((text_position[0] + padding, text_position[1] + padding), 
+                      text=confidence, fill='darkgreen', font=font)
 
     return image

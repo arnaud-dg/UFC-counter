@@ -44,14 +44,19 @@ df = pd.read_csv(str(DATA_PATH), sep=";")
 
 # Configure the sidebar with information and options
 st.sidebar.write("")
-st.sidebar.write("The purpose of this web app is to streamline the process of *counting Colony-Forming Units* in *gelose plates* using advanced computer vision techniques.")
+st.sidebar.write("The purpose of this web app is to streamline the process of **counting Colony-Forming Units** in **gelose plates** using advanced computer vision techniques.")
+st.sidebar.write("")
 st.sidebar.divider()
-st.sidebar.write("Please load a gelose plate picture to trigger off the analysis. You can choose a picture among a sample library or use your own picture witht the toggle button below.")
+st.sidebar.write("")
+st.sidebar.write("**How to ?**")
+st.sidebar.write("Please load a gelose plate picture to trigger off the analysis. You can choose a picture among a sample library or use your own picture with the toggle button below.")
+sample_library = st.sidebar.toggle("Sample library loading", value=True)
+st.sidebar.write("")
 st.sidebar.divider()
-st.sidebar.write("Options")
+st.sidebar.write("")
+st.sidebar.write("**Visualization Options**")
 
 # Sidebar toggle options
-sample_library = st.sidebar.toggle("Sample library loading", value=False)
 activate_shutter_view = st.sidebar.toggle("Activate the shutter view", value=False)
 show_probabilities = st.sidebar.toggle("Show prediction probabilities", value=False)
 
@@ -67,8 +72,8 @@ def load_sample_image(selected_image):
     Returns:
         BytesIO: Image file in a BytesIO format.
     """
-    github_repo_url = "https://github.com/arnaud-dg/CFU-counter/assets/sample/"
-    image_url = github_repo_url + selected_image
+    github_raw_url = "https://raw.githubusercontent.com/arnaud-dg/UFC-counter/main/assets/sample/"
+    image_url = github_raw_url + selected_image
     
     response = requests.get(image_url)
     if response.status_code == 200:
@@ -76,14 +81,16 @@ def load_sample_image(selected_image):
         img_file.name = selected_image
         return img_file
     else:
-        st.error("Failed to load the image from GitHub.")
+        st.error(f"Failed to load the image from GitHub. Status code: {response.status_code}")
         return None
 
 # Load the image based on user input or from sample library
 if sample_library:
-    image_files = ["test.jpg", "test_2.jpg", "test_3.jpg", "test_4.jpg", "test_5.jpg", "test_6.jpg", "test_7.jp", "test_8.jpg"]
-    selected_image = st.selectbox("Please select a sample picture.", image_files)
-    uploaded_file = load_sample_image(selected_image)
+    image_files = ["test.jpg", "test_2.jpg", "test_3.jpg", "test_4.jpg", "test_5.jpg", "test_6.jpg", "test_7.jpg", "test_8.jpg"]
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
+    with col1:
+        selected_image = st.selectbox("Please select a sample picture.", image_files)
+        uploaded_file = load_sample_image(selected_image)
 else:
     uploaded_file = st.file_uploader("Please select your own new file through the browser of drag and drop it.", type=["jpg", "png", "jpeg"])
 
