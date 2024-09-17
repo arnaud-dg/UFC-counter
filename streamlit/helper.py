@@ -66,8 +66,8 @@ def draw_rectangles(image, results_data, show_probabilities=False):
     width, height = image.size
     
     # Calculate base size for text and rectangles, proportional to image dimensions
-    base_size = int(min(width, height) * 0.03)  # 2% of the smaller dimension
-    min_size = 16
+    base_size = int(min(width, height) * 0.02)  # 2% of the smaller dimension
+    min_size = 14
     font_size = max(base_size, min_size)
     line_width = max(3, int(base_size * 0.3))
     
@@ -93,7 +93,7 @@ def draw_rectangles(image, results_data, show_probabilities=False):
             text_height = text_bbox[3] - text_bbox[1]
             
             # Add padding to the text background
-            padding = font_size // 1 #2
+            padding = font_size // 2
             text_bg = [text_position[0], text_position[1], 
                        text_position[0] + text_width + padding * 2, 
                        text_position[1] + text_height + padding * 2]
