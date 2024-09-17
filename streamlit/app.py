@@ -86,7 +86,7 @@ def load_sample_image(selected_image):
 
 # Load the image based on user input or from sample library
 if sample_library:
-    image_files = ["test.jpg", "test_2.jpg", "test_3.jpg", "test_4.jpg", "test_5.jpg", "test_6.jpg", "test_7.jpg", "test_8.jpg"]
+    image_files = ["test_1.jpg", "test_2.jpg", "test_3.jpg", "test_4.jpg", "test_5.jpg", "test_6.jpg", "test_7.jpg", "test_8.jpg"]
     col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
     with col1:
         selected_image = st.selectbox("Please select a sample picture.", image_files)
